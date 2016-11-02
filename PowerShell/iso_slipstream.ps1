@@ -1,12 +1,14 @@
 ﻿<#
 .DESCRIPTION
-The script uses a number of tools listed below to extract, slipstream and compile a Windows 2012 ISO.
+The script uses a number of tools (assumed already installed) listed below to extract, slipstream and compile a Windows 2012 ISO.
 
 + WinRAR
 + WSUS Offline
 + Windows ADK 8.1
 
 .EXAMPLE
+
+iso_slipstream.ps1 -TemplateName NewTemplate
 
 .PARAMETER iso
 The location of the base ISO.  Must be full file path. etc c:\Temp\MyCD.iso
@@ -29,7 +31,7 @@ The full directory location for the WinRAR executable
 param
 (
     [string[]]$iso = "c:\ISO\SW_DVD9_Windows_Svr_Std_and_DataCtr_2012_R2_64Bit_English_-4_MLF_X19-82891.iso",
-    [string[]]$TemplateName="Martin_Test",
+    [string[]]$TemplateName="Slipstream_Test",
     [string[]]$TempLoc = 'c:\ISO',
     [string[]]$ImageName = 'Windows Server 2012 R2 SERVERSTANDARD',
     [string[]]$WinRar = "C:\Program Files\WinRAR\winrar.exe",

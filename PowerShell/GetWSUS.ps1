@@ -1,4 +1,9 @@
-﻿$WSUSOffline = "c:\wsusoffline"
+﻿<#
+.DESCRIPTION
+Using WSUSOffline v10.8 (wsusoffline.net), download a cache of Windows Updates for Server 2012 R2 and Win8.1
+#>
+
+$WSUSOffline = "c:\wsusoffline"
 $WinRar = "C:\Program Files\WinRAR\winrar.exe"
 
 $WSUSCheck = Test-Path $WSUSOffline
@@ -11,5 +16,10 @@ if($WSUSCheck -eq $false) {
         Catch {$_.Exception}
 }
 
-#Get all Windows Updates for Server 2012
-C:\wsusoffline\cmd\DownloadUpdates.cmd w63-x64 glb /includedotnet /verify
+Try {
+    #Get all Windows Updates for Server 2012
+    C:\wsusoffline\cmd\DownloadUpdates.cmd w63-x64 glb /includedotnet /verify
+}
+Catch {
+    $_.Exception
+}
