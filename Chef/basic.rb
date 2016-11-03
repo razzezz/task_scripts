@@ -1,3 +1,5 @@
+# basic.rb
+# Teaching the basics of Chef using Chef-DK
 package 'git' do
     action :install
 end
