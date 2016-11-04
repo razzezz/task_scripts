@@ -1,0 +1,29 @@
+{
+  "builders": [
+      {
+        "name": "packer-{{.GuestOS}}-{{isotime \"2006-01-02\"}}",
+        "type": "virtualbox-iso",
+        "vboxmanage": [
+          [ "modifyvm", "{{.Name}}", "--natpf1", "guest_winrm,tcp,,55985,,5985" ],
+          [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+          [ "modifyvm", "{{.Name}}", "--vram", "36" ],
+          [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+          [ "modifyvm", "{{.Name}}", "--hardwareuuid", "02f110e7-369a-4bbc-bbe6-6f0b6864ccb6" ]
+        ],
+        "guest_os_type": "Windows2012_64",
+        "iso_url": "/Users/martin/Downloads/SW_DVD9_Windows_Svr_Std_and_DataCtr_2012_R2_64Bit_English_-4_MLF_X19-82891.ISO",
+        "iso_checksum": "9a00defab26a046045d939086df78460",
+        "iso_checksum_type": "md5",
+        "communicator": "winrm",
+        "winrm_username": "administrator",
+        "winrm_password": "vagrant",
+        "winrm_timeout": "6h",
+        "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+        "shutdown_timeout": "1h",
+        "headless": true,
+        "floppy_files": [
+          "provisioners/Autounattend.xml"
+        ]
+      }
+    ]
+}
