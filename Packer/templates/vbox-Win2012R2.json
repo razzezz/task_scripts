@@ -31,7 +31,7 @@
     {
       "type": "powershell",
       "inline": [
-        START http://boxstarter.org/package/nr/url?https://gist.github.com/razzezz/f410d1eeede87bccf55644e941caed9d#file-windows2012r2-txt
+        "START http://boxstarter.org/package/nr/url?https://gist.github.com/razzezz/f410d1eeede87bccf55644e941caed9d#file-windows2012r2-txt"
       ]
     }
   ]
