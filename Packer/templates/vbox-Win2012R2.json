@@ -1,14 +1,13 @@
 {
   "variables": {
     "iso_url": "/Users/martin/Downloads/SW_DVD9_Windows_Svr_Std_and_DataCtr_2012_R2_64Bit_English_-4_MLF_X19-82891.ISO",
-    "iso_checksum_type": "md5",
     "iso_checksum": "9a00defab26a046045d939086df78460",
-    "OSType": "Windows2012R2",
-    "BoxStarter": "START http://boxstarter.org/package/nr/url?https://gist.github.com/razzezz/f410d1eeede87bccf55644e941caed9d#file-windows2012r2-txt"
+    "TemplateName": "Windows2012R2",
+    "BoxStarter": "https://gist.github.com/razzezz/f410d1eeede87bccf55644e941caed9d#file-windows2012r2-txt"
   },
   "builders": [
       {
-        "name": "{{user `OSType`}}-{{isotime \"02-01-2006\"}}",
+        "name": "{{user `TemplateName`}}-{{isotime \"02-01-2006\"}}",
         "type": "virtualbox-iso",
         "vboxmanage": [
           [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
@@ -21,16 +20,16 @@
         "iso_checksum": "{{user `iso_checksum`}}",
         "iso_checksum_type": "md5",
         "communicator": "winrm",
-        "winrm_username": "administrator",
+        "winrm_username": "vagrant",
         "winrm_password": "vagrant",
         "winrm_timeout": "2h",
-        "shutdown_command": "shutdown /r /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+        "shutdown_command": "shutdown /s /f /t 5",
         "shutdown_timeout": "10m",
         "headless": true,
-        "output_directory": "{{user `OSType`}}-{{isotime \"02-01-2006\"}}",
+        "output_directory": "{{user `TemplateName`}}-{{isotime \"02-01-2006\"}}",
         "floppy_files": [
-          "{{template_dir}}/../provisioners/Windows2012R2/Autounattend.xml",
-          "{{template_dir}}/../provisioners/Windows2012R2/configure-winrm.ps1"
+          "{{template_dir}}/../provisioners/{{user `TemplateName`}}/Autounattend.xml",
+          "{{template_dir}}/../provisioners/{{user `TemplateName`}}/image-cleanup.ps1"
         ]
       }
     ],
@@ -38,7 +37,7 @@
     {
       "type": "powershell",
       "inline": [
-        "{{user `BoxStarter`}}"
+        "Import-Module $env:appdata\boxstarter\boxstarter.chocolatey\boxstarter.chocolatey.psd1; Install-BoxstarterPackage -PackageName {{user `BoxStarter`}}"
       ]
     }
   ]
