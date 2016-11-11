@@ -1,7 +1,6 @@
 <#
    .DESCRIPTION
     The script below will;
-        #Download and Install Chocolatey
         Download and Install BoxStarter
         Install Boxstarter to Application Packaging via a GIST file
         Enable Remote Desktop for Administration
@@ -26,7 +25,7 @@ $secpasswd = ConvertTo-SecureString "vagrant" -AsPlainText -Force
 $cred = New-Object System.Management.Automation.PSCredential ("vagrant", $secpasswd)
 
 Import-Module $env:appdata\boxstarter\boxstarter.chocolatey\boxstarter.chocolatey.psd1
-Install-BoxstarterPackage -PackageName a:\package.ps1 -Credential $cred
+#Install-BoxstarterPackage -PackageName a:\package.ps1 -Credential $cred
 
 Enable-RemoteDesktop
 Set-NetFirewallRule -Name RemoteDesktop-UserMode-In-TCP -Enabled True
@@ -37,7 +36,6 @@ Set-ItemProperty -Path $pageFileMemoryKey -Name PagingFiles -Value ""
 
 Update-ExecutionPolicy -Policy Unrestricted
 
-<#
 Write-BoxstarterMessage "Removing unused features..."
 Get-WindowsFeature |
 ? { $_.InstallState -eq 'Available' } |
@@ -49,7 +47,6 @@ if(Test-PendingReboot){ Invoke-Reboot }
 Write-BoxstarterMessage "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
-#>
 
 @(
     "$env:localappdata\Nuget",
@@ -67,6 +64,7 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
         }
     }
 
+#The scriptblock below ZEROs all blocks in a virtual disk to aid in compression, but takes >1 Hour to complete. Only use if required.
 <#
 Write-BoxstarterMessage "zeroing out empty space..."
 wget http://download.sysinternals.com/files/SDelete.zip -OutFile sdelete.zip
